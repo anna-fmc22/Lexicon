@@ -63,43 +63,43 @@ public class Main {
         final int matchArgCount = 3;
         final int containsArgCount = 3;
         switch (command) {
-            case "contents":
+            case "contents" -> {
                 if (args.length != contentsArgCount) {
                     System.out.printf("%s %s%n", INVALID_USAGE_PREFIX,
                             CONTENTS_USAGE);
                     return;
                 }
                 handleContents(lex, args[1]);
-                break;
+            }
 
-            case "remove":
+            case "remove" -> {
                 if (args.length < removeArgCount) {
                     System.out.printf("%s %s%n", INVALID_USAGE_PREFIX,
                             REMOVE_USAGE);
                     return;
                 }
                 handleRemove(lex, args);
-                break;
+            }
 
-            case "suggest":
+            case "suggest" -> {
                 if (args.length != suggestArgCount) {
                     System.out.printf("%s %s%n", INVALID_USAGE_PREFIX,
                             SUGGEST_USAGE);
                     return;
                 }
                 handleSuggest(lex, args);
-                break;
+            }
 
-            case "match":
+            case "match" -> {
                 if (args.length != matchArgCount) {
                     System.out.printf("%s %s%n", INVALID_USAGE_PREFIX,
                             MATCH_USAGE);
                     return;
                 }
                 handleMatch(lex, args);
-                break;
+            }
 
-            case "contains":
+            case "contains" -> {
                 if (args.length < containsArgCount) {
                     System.out.printf("%s %s%n", INVALID_USAGE_PREFIX,
                             CONTAINS_USAGE);
@@ -107,12 +107,12 @@ public class Main {
                 }
 
                 handleContains(lex, args);
-                break;
+            }
 
-            default:
+            default -> {
                 System.out.printf("Unknown command: %s%n", command);
                 printCommandList();
-                break;
+            }
         }
     }
 
