@@ -26,7 +26,7 @@ public final class LexiconTrie implements Lexicon {
      * Constructs a new lexicon with no words.
      */
     public LexiconTrie() {
-        root = new LexiconNode(' ', false);
+        root = new LexiconNode(' ', false, null);
         numWords = 0;
     }
 
@@ -56,7 +56,7 @@ public final class LexiconTrie implements Lexicon {
             if (currentNode.hasChildren() && currentNode.getChild(c) != null) {
                 currentNode = currentNode.getChild(c);
             } else {
-                LexiconNode newChild = new LexiconNode(c, false);
+                LexiconNode newChild = new LexiconNode(c, false, currentNode);
                 currentNode.addChild(newChild);
                 currentNode = newChild;
             }
@@ -104,7 +104,7 @@ public final class LexiconTrie implements Lexicon {
      */
     @Override
     public boolean removeWord(String word) {
-        if (containsWord(word)) {
+         if (containsWord(word)) {
             char[] characters = word.toCharArray();
             LexiconNode currentNode = root;
             for (char c : characters) {
@@ -112,9 +112,25 @@ public final class LexiconTrie implements Lexicon {
             }
             currentNode.setWord(false);
             numWords--;
+            while (!currentNode.hasChildren() && currentNode.isWord() == false && currentNode != root) {
+                char c = currentNode.letter();
+                currentNode = currentNode.getParent();
+                currentNode.removeChild(c);
+            }
             return true;
         }
         return false;
+        // if (containsWord(word)) {
+        //     char[] characters = word.toCharArray();
+        //     LexiconNode currentNode = root;
+        //     for (char c : characters) {
+        //         currentNode = currentNode.getChild(c);
+        //     }
+        //     currentNode.setWord(false);
+        //     numWords--;
+        //     return true;
+        // }
+        // return false;
      
     }
 

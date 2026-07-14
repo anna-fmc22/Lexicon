@@ -41,11 +41,12 @@ public final class LexiconNode implements Iterable<LexiconNode> {
      * @param c    the character represented by this node
      * @param word whether this node marks the end of a word
      */
-    public LexiconNode(char c, boolean word) {
+    public LexiconNode(char c, boolean word, LexiconNode parent) {
         this.letter = c;
         this.isWord = word;
         this.child = null;
         this.sibling = null;
+        this.parent = parent;
     }
 
     /**
@@ -183,8 +184,11 @@ public final class LexiconNode implements Iterable<LexiconNode> {
             while (target.hasSibling() && target.sibling.letter != c) {
                 target = target.sibling;
             }
-            if (target.sibling.letter == c) {
+            if (target.sibling.letter == c && target.sibling.hasSibling()) {
                 target.setSibling(target.sibling.sibling);
+            }
+            else if(target.sibling.letter == c) {
+                target.setSibling(null);
             }
         }
     }
@@ -197,6 +201,15 @@ public final class LexiconNode implements Iterable<LexiconNode> {
      */
     public LexiconNode getSibling() {
         return this.sibling;
+    }
+
+    /**
+     * Returns the parent node corresponding of this node.
+     *
+     * @return the parent node
+     */
+    public LexiconNode getParent() {
+        return this.parent;
     }
 
 
